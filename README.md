@@ -19,10 +19,10 @@
 
 2. Add `@EnableJpaLockPersistence` annotation to your spring boot configuration class
 
-3. Make sure your database contains following table definition named `lock` within schema `lock_persistence`:
+3. Make sure your database contains following table definition named `lock_persistence` within default schema:
 
 ```
-CREATE TABLE lock_persistence.lock (
+CREATE TABLE lock_persistence (
   id      SERIAL PRIMARY KEY,
   name    VARCHAR(256),
   value   VARCHAR(36),

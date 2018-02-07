@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "lock", schema = "lock_persistence")
+@Table(name = "lock_persistence")
 public class LockEntity {
 
     @Id
