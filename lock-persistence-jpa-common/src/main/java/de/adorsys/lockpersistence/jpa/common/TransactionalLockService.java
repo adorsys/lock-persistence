@@ -1,4 +1,4 @@
-package de.adorsys.lockpersistence.jpa;
+package de.adorsys.lockpersistence.jpa.common;
 
 import de.adorsys.lockpersistence.exception.LockExistsException;
 import de.adorsys.lockpersistence.exception.LockNotHeldException;

@@ -1,4 +1,4 @@
-package de.adorsys.lockpersistence.jpa.config;
+package de.adorysys.lockpersistence.mongo.config;
 
 import org.springframework.context.annotation.Import;
 
@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Target(value = {java.lang.annotation.ElementType.TYPE})
 @Documented
 @Import({
-        JpaLockPersistenceConfiguration.class
+        MongoLockPersistenceConfiguration.class
 })
-public @interface EnableJpaLockPersistence {
+public @interface EnableMongoLockPersistence {
 }

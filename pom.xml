@@ -11,6 +11,8 @@
 
     <modules>
         <module>lock-persistence-core</module>
+        <module>lock-persistence-jpa-common</module>
+        <module>lock-persistence-mongo</module>
         <module>lock-persistence-jpa</module>
     </modules>
 
@@ -67,6 +69,16 @@
             <dependency>
                 <groupId>de.adorsys.lock-persistence</groupId>
                 <artifactId>lock-persistence-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.adorsys.lock-persistence</groupId>
+                <artifactId>lock-persistence-jpa-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.adorsys.lock-persistence</groupId>
+                <artifactId>lock-persistence-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

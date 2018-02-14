@@ -1,54 +1,53 @@
-package de.adorsys.lockpersistence.jpa;
+package de.adorysys.lockpersistence.mongo;
 
-import de.adorsys.lockpersistence.jpa.entity.LockEntity;
-import de.adorsys.lockpersistence.jpa.mapper.LockEntityMapper;
-import de.adorsys.lockpersistence.jpa.repository.LockRepository;
 import de.adorsys.lockpersistence.model.Lock;
 import de.adorsys.lockpersistence.service.LockPersistenceRepository;
+import de.adorysys.lockpersistence.mongo.entity.LockEntity;
+import de.adorysys.lockpersistence.mongo.mapper.LockEntityMapper;
+import de.adorysys.lockpersistence.mongo.repository.MongoLockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
-public class DatabaseLockPersistenceRepository implements LockPersistenceRepository {
+public class MongoLockPersistenceRepository implements LockPersistenceRepository {
 
-    private final LockRepository repository;
-    private final LockEntityMapper mapper;
+    private final MongoLockRepository repository;
+    private final LockEntityMapper entityMapper;
 
     @Autowired
-    public DatabaseLockPersistenceRepository(
-            LockRepository repository,
-            LockEntityMapper mapper
+    public MongoLockPersistenceRepository(
+            MongoLockRepository repository,
+            LockEntityMapper entityMapper
     ) {
         this.repository = repository;
-        this.mapper = mapper;
+        this.entityMapper = entityMapper;
     }
 
     @Override
     public Iterable<Lock> getAll() {
-        Iterable<LockEntity> all = repository.findAll();
-        return mapper.mapFromEntities(all);
+        List<LockEntity> allFound = repository.findAll();
+        return entityMapper.mapFromEntities(allFound);
     }
 
     @Override
     public Optional<Lock> get(String name) {
         LockEntity foundLock = repository.findByName(name);
 
-        if (foundLock != null) {
-            Lock lock = mapper.mapFromEntity(foundLock);
-            return Optional.of(lock);
+        if(foundLock == null) {
+            return Optional.empty();
         }
 
-        return Optional.empty();
+        return Optional.of(entityMapper.mapFromEntity(foundLock));
     }
 
     @Override
     public void create(Lock lock) {
-        LockEntity lockToCreate = mapper.mapToEntity(lock);
-        repository.save(lockToCreate);
+        repository.save(entityMapper.mapToEntity(lock));
     }
 
     @Override
@@ -61,6 +60,7 @@ public class DatabaseLockPersistenceRepository implements LockPersistenceReposit
         LockEntity foundLock = repository.findByNameAndValue(lock.getName(), lock.getValue());
 
         foundLock.setExpires(lock.getExpires());
+
         repository.save(foundLock);
     }
 }
