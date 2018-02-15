@@ -7,19 +7,26 @@
 ```
     <dependency>
         <groupId>de.adorsys.lock-persistence</groupId>
-        <artifactId>lock-persistence-jpa</artifactId>
-        <version>${lock-persistence.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>de.adorsys.lock-persistence</groupId>
         <artifactId>lock-persistence-core</artifactId>
         <version>${lock-persistence.version}</version>
     </dependency>
 ```
 
-2. Add `@EnableJpaLockPersistence` annotation to your spring boot configuration class
+### ... for relational databases
 
-3. Make sure your database contains following table definition named `lock_persistence` within default schema:
+2. Add maven dependency:
+
+```
+    <dependency>
+        <groupId>de.adorsys.lock-persistence</groupId>
+        <artifactId>lock-persistence-jpa</artifactId>
+        <version>${lock-persistence.version}</version>
+    </dependency>
+```
+
+3. Add `@EnableJpaLockPersistence` annotation to your spring boot configuration class
+
+4. Make sure your database contains following table definition named `lock_persistence` within default schema:
 
 ```
 CREATE TABLE lock_persistence (
@@ -32,7 +39,27 @@ CREATE TABLE lock_persistence (
 
 (example for postgres)
 
-4. Make sure you're providing a Bean for a `LockClient` instance:
+continue with 5.
+
+### ... for mongo
+
+2. Add maven dependency:
+
+```
+    <dependency>
+        <groupId>de.adorsys.lock-persistence</groupId>
+        <artifactId>lock-persistence-mongo</artifactId>
+        <version>${lock-persistence.version}</version>
+    </dependency>
+```
+
+3. Add `@EnableMongoLockPersistence` annotation to your spring boot configuration class
+
+continue with 5.
+
+### provide and use LockClient Bean
+
+5. Make sure you're providing a Bean for a `LockClient` instance:
 
 ```
 @Bean
@@ -41,7 +68,7 @@ LockClient lockClient(LockService lockService) {
 }
 ```
 
-5. Use the injected `LockClient` instance in your code:
+6. Use the injected `LockClient` instance in your code:
 
 ```
 lockClient.executeIfOwned("<your concrete lock name>", new Runnable() {
