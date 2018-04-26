@@ -1,4 +1,4 @@
-package de.adorsys.lockpersistence.jpa.common;
+package de.adorsys.lockpersistence.jpa.transaction;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

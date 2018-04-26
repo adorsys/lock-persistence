@@ -1,10 +1,8 @@
 package de.adorysys.lockpersistence.mongo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 import java.util.Date;
 
-@Entity(name = "lock_persistence")
 public class LockEntity {
 
     @Id
